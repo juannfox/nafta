@@ -39,6 +39,7 @@ class HttpClient:
     """
     A wrapper for HTTP requests from Python.
     """
+
     class HttpMethod(Enum):
         """
         HTTP Verbs/Methods
@@ -67,6 +68,18 @@ class HttpClient:
         except JSONDecodeError:
             response = None
         return response
+
+    @staticmethod
+    def download_file(url: str):
+        """
+        An HTTP download
+        """
+        response = HttpClient.http_request(url)
+        if response is not None and response.status_code == 200:
+            content = response.content
+        else:
+            content = None
+        return content
 
 
 class DatasetResource():
@@ -124,6 +137,15 @@ class DatasetResponse():
             + f"id: {self.id}\n" \
             + f"resources: \n{res}"
 
+    def get_resource(self, name: str):
+        resource = None
+        if self.resources is not None:
+            for res in self.resources:
+                if res.name == name:
+                    resource = res
+                    break
+        return resource
+
 
 @dataclass
 class APIGobierno:
@@ -133,6 +155,7 @@ class APIGobierno:
     API_URL = "https://datos.gob.ar/api/3"
     DATASET_ID = "energia-precios-surtidor---resolucion-3142016"
     URL_PATHs = {"get_dataset": "action/package_show"}
+    RESOURCE_NAME = "Precios vigentes en surtidor - Resolución 314/2016"
 
     def datset_url(self):
         url = f"{self.API_URL}/{self.URL_PATHs['get_dataset']}" \
@@ -151,6 +174,16 @@ class APIGobierno:
         response = HttpClient.api_call(self.datset_url())
         return DatasetResponse(response)
 
+    def get_gas_prices_resource(self):
+        try:
+            dsmetadata = self.get_dataset_metadata()
+            rsmetadata = dsmetadata.get_resource(self.RESOURCE_NAME)
+            response = HttpClient.download_file(rsmetadata.url)
+        except KeyError:
+            response = None
+        return response
+
 
 gov = APIGobierno()
 print(gov.get_dataset_metadata())
+print(gov.get_gas_prices_resource())
