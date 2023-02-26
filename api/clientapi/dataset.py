@@ -5,10 +5,11 @@ Dataset metadata and resource classes.
 from .io import FileName
 
 
-class DatasetResource():
+class DatasetResource:
     """
     A resource within the gov. API response.
     """
+
     name: str
     access_url: str
     url: str
@@ -27,24 +28,34 @@ class DatasetResource():
             self.file_name = None
 
     def __str__(self):
-        return f"name: {self.name}\n" \
-            + f"access_url: {self.access_url}\n" \
-            + f"url: {self.url}\n" \
+        return (
+            f"name: {self.name}\n"
+            + f"access_url: {self.access_url}\n"
+            + f"url: {self.url}\n"
             + f"file_name: {self.file_name}"
+        )
+
+    def exists_locally(self):
+        """
+        Verify wether the file name specified in the
+        response already exists locally (on disk).
+        """
+        return self.file_name.exists()
 
 
-class DatasetResponse():
+class DatasetResponse:
     """
     A response from the Argentina's gov. API.
     """
+
     success: bool
-    id: str
+    identifier: str
     resources: None
 
     def __init__(self, data: dict):
         try:
             self.success = data["success"]
-            self.id = data["result"]["id"]
+            self.identifier = data["result"]["id"]
             resources = data["result"]["resources"]
             self.resources = []
             for resource in resources:
@@ -56,11 +67,17 @@ class DatasetResponse():
         res = ""
         for resource in self.resources:
             res += f"---\n{resource.__str__()}\n"
-        return f"success: {self.success}\n" \
-            + f"id: {self.id}\n" \
-            + f"resources: \n{res}"
+        return (
+            f"success: {self.success}\n"
+            f"id: {self.identifier}\n"
+            f"resources: \n{res}"
+        )
 
     def get_resource(self, name: str):
+        """
+        Fetch a resource from the list of resources in
+        the response, filtering by key.
+        """
         resource = None
         if self.resources is not None:
             for res in self.resources:

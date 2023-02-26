@@ -7,8 +7,8 @@ from os import getenv
 import clientapi as client
 
 # Logging options
-log_level = "DEBUG" if getenv("DEBUG") == "1" else "INFO"
-logging.basicConfig(level=log_level)
+LOG_LEVEL = "DEBUG" if getenv("DEBUG") == "1" else "INFO"
+logging.basicConfig(level=LOG_LEVEL)
 
 
 gov = client.APIGobierno()

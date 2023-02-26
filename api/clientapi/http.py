@@ -1,9 +1,10 @@
 """
-
+A wrapper for HTTP interactions from Python.
 """
-from enum import Enum
 from dataclasses import dataclass
-from requests import request, JSONDecodeError
+from enum import Enum
+
+from requests import JSONDecodeError, request
 
 
 @dataclass
@@ -16,6 +17,7 @@ class HttpClient:
         """
         HTTP Verbs/Methods
         """
+
         PUT = "Create"
         GET = "Read"
         POST = "Update"
@@ -23,13 +25,15 @@ class HttpClient:
 
     @staticmethod
     def http_request(
-            url: str, method: HttpMethod = HttpMethod.GET,
-            stream: bool = False
-            ):
+        url: str, method: HttpMethod = HttpMethod.GET,
+        stream: bool = False, timeout: int = 60
+    ):
         """
         An HTTP request
         """
-        response = request(method.name, url, stream=stream)
+        response = request(
+            method.name, url, stream=stream, timeout=timeout
+        )
         return response
 
     @staticmethod
