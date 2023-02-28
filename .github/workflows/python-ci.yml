@@ -5,15 +5,15 @@ name: Python CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ ".*" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ ".*" ]
 
 permissions:
   contents: read
 
 jobs:
-  build:
+  linting:
 
     runs-on: ubuntu-latest
 
