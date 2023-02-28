@@ -45,17 +45,33 @@ class APIGobierno:
         dataset.
         """
         response = HttpClient.api_call(self.datset_url())
-        return DatasetResponse(response)
+        try:
+            if isinstance(response, dict):
+                dataset = DatasetResponse(response)
+            else:
+                raise RuntimeError(
+                    "Unable to fetch Dataset" f"metadata. Got: {response}"
+                )
+        except ValueError as exc:
+            raise RuntimeError(
+                "Unable to parse Dataset" f"metadata. Got: {response}"
+            ) from exc
+        return dataset
 
     def get_gas_prices_resource(self):
         """
         Get the resource containing the gas-prices Dataset, as defined
         in the API's metadata response.
         """
+        response = None
         try:
             dsmetadata = self.get_dataset_metadata()
-            rsmetadata = dsmetadata.get_resource(self.RESOURCE_NAME)
-            response = HttpClient.http_request(rsmetadata.url, stream=True)
+            if dsmetadata is not None:
+                rsmetadata = dsmetadata.get_resource(self.RESOURCE_NAME)
+                if rsmetadata is not None:
+                    response = HttpClient.http_request(
+                        rsmetadata.url, stream=True
+                    )
         except KeyError:
-            response = None
+            pass
         return response

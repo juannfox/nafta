@@ -25,7 +25,7 @@ class DatasetResource:
         try:
             self.file_name = FileName(data["fileName"])
         except KeyError:
-            self.file_name = None
+            pass
 
     def __str__(self):
         return (
@@ -50,7 +50,7 @@ class DatasetResponse:
 
     success: bool
     identifier: str
-    resources: None
+    resources: list
 
     def __init__(self, data: dict):
         try:
@@ -58,8 +58,9 @@ class DatasetResponse:
             self.identifier = data["result"]["id"]
             resources = data["result"]["resources"]
             self.resources = []
-            for resource in resources:
-                self.resources.append(DatasetResource(resource))
+            if resources is not None:
+                for resource in resources:
+                    self.resources.append(DatasetResource(resource))
         except KeyError as exc:
             raise ValueError("Wrong dataset format.") from exc
 

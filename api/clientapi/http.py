@@ -25,15 +25,15 @@ class HttpClient:
 
     @staticmethod
     def http_request(
-        url: str, method: HttpMethod = HttpMethod.GET,
-        stream: bool = False, timeout: int = 60
+        url: str,
+        method: HttpMethod = HttpMethod.GET,
+        stream: bool = False,
+        timeout: int = 60,
     ):
         """
         An HTTP request
         """
-        response = request(
-            method.name, url, stream=stream, timeout=timeout
-        )
+        response = request(method.name, url, stream=stream, timeout=timeout)
         return response
 
     @staticmethod

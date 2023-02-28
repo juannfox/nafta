@@ -20,7 +20,7 @@ class FileName:
         if search is None:
             self.name = file_name
             self.full_name = file_name
-            self.extension = None
+            self.extension = ""
         else:
             self.name = search.group(1)
             self.extension = search.group(3)
