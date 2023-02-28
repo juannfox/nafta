@@ -27,7 +27,7 @@ class FileName:
             self.full_name = self.name + self.extension
 
     def __str__(self):
-        ext = "" if self.extension is None else f".{self.extension}"
+        ext = "" if self.extension in [None, ""] else f".{self.extension}"
         return f"{self.name}{ext}"
 
     def exists(self):

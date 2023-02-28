@@ -25,7 +25,7 @@ class DatasetResource:
         try:
             self.file_name = FileName(data["fileName"])
         except KeyError:
-            pass
+            self.file_name = FileName("")
 
     def __str__(self):
         return (
