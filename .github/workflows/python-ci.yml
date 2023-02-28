@@ -36,7 +36,8 @@ jobs:
         find api -maxdepth 2 -type f -name "*.py" | xargs flake8
     - name: Lint with pylint
       run: |
-        find api -maxdepth 2 -type f -name "*.py" | xargs pylint
+        find api -maxdepth 2 -type f -name "*.py" | xargs pylint --init-hook \
+        "import sys; sys.path.append('./api')"
     - name: Lint with isort
       run: |
         isort api --check
