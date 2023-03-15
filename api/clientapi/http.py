@@ -4,9 +4,10 @@ A wrapper for HTTP interactions from Python.
 import logging
 from dataclasses import dataclass
 from enum import Enum
-from urllib3 import PoolManager, exceptions as ul3exc
 
 from requests import JSONDecodeError, request
+from urllib3 import PoolManager
+from urllib3 import exceptions as ul3exc
 
 
 @dataclass
