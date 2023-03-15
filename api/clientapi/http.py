@@ -1,10 +1,10 @@
 """
 A wrapper for HTTP interactions from Python.
 """
+import logging
 from dataclasses import dataclass
 from enum import Enum
-from urllib3 import PoolManager
-from shutil import copyfileobj
+from urllib3 import PoolManager, exceptions as ul3exc
 
 from requests import JSONDecodeError, request
 
@@ -53,21 +53,19 @@ class HttpClient:
     @staticmethod
     def http_download(
         url: str,
-        # outfile: str,
-        method: HttpMethod = HttpMethod.GET,
         timeout: int = 60,
     ):
         """
         An HTTP request
         """
+        response = None
         pool = PoolManager()
-        response = pool.request(
-            method.name, url,
-            preload_content=False, timeout=timeout
-        )
-        # with pool.request(
-        #     method.name, url,
-        #     preload_content=False, timeout=timeout
-        # ) as res, open(outfile, 'wb') as file_hwnd:
-        #     copyfileobj(res, file_hwnd)
+        try:
+            logging.debug("Attempting to download %s.", url)
+            response = pool.request(
+                "GET", url,
+                preload_content=False, timeout=timeout
+            )
+        except ul3exc.MaxRetryError as exc:
+            logging.error("Failed to download %s: %s", url, exc)
         return response
