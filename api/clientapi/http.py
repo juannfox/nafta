@@ -3,6 +3,8 @@ A wrapper for HTTP interactions from Python.
 """
 from dataclasses import dataclass
 from enum import Enum
+from urllib3 import PoolManager
+from shutil import copyfileobj
 
 from requests import JSONDecodeError, request
 
@@ -46,4 +48,26 @@ class HttpClient:
             response = response.json()
         except JSONDecodeError:
             response = None
+        return response
+
+    @staticmethod
+    def http_download(
+        url: str,
+        # outfile: str,
+        method: HttpMethod = HttpMethod.GET,
+        timeout: int = 60,
+    ):
+        """
+        An HTTP request
+        """
+        pool = PoolManager()
+        response = pool.request(
+            method.name, url,
+            preload_content=False, timeout=timeout
+        )
+        # with pool.request(
+        #     method.name, url,
+        #     preload_content=False, timeout=timeout
+        # ) as res, open(outfile, 'wb') as file_hwnd:
+        #     copyfileobj(res, file_hwnd)
         return response
