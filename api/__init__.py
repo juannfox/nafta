@@ -14,4 +14,5 @@ logging.basicConfig(level=LOG_LEVEL)
 gov = client.APIGobierno()
 print(gov.get_dataset_metadata())
 response = gov.get_gas_prices_resource()
-print(response.data)
+if response:
+    print(response.data)

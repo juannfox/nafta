@@ -69,9 +69,7 @@ class APIGobierno:
             if dsmetadata is not None:
                 rsmetadata = dsmetadata.get_resource(self.RESOURCE_NAME)
                 if rsmetadata is not None:
-                    response = HttpClient.http_download(
-                        rsmetadata.url
-                    )
+                    response = HttpClient.http_download(rsmetadata.url)
         except KeyError:
             pass
         return response

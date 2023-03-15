@@ -63,8 +63,7 @@ class HttpClient:
         try:
             logging.debug("Attempting to download %s.", url)
             response = pool.request(
-                "GET", url,
-                preload_content=False, timeout=timeout
+                "GET", url, preload_content=False, timeout=timeout
             )
         except ul3exc.MaxRetryError as exc:
             logging.error("Failed to download %s: %s", url, exc)
