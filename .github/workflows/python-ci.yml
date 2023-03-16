@@ -57,6 +57,3 @@ jobs:
     - name: Simple test
       run: |
         curl http://localhost:8080/
-    - name: Read server output
-      run: |
-        cat nohup.log 2> /dev/null
