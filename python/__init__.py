@@ -4,7 +4,7 @@ Python code for the API
 import logging
 from os import getenv
 
-import clientapi as client
+import client
 
 # Logging options
 LOG_LEVEL = "DEBUG" if getenv("DEBUG") == "1" else "INFO"

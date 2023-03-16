@@ -7,7 +7,7 @@
 FIND_DEPTH=2
 FIND_FILTER="*.py"
 VENV_PIP="venv/lib/python3.10/site-packages"
-TARGET="api"
+TARGET="python"
 
 function lint_flake8(){
     find "${TARGET}" -maxdepth "${FIND_DEPTH}" -type f -name "${FIND_FILTER}" \
