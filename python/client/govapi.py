@@ -73,3 +73,22 @@ class APIGobierno:
         except KeyError:
             pass
         return response
+
+    def get_gas_prices_resource_file(self, outfile: str):
+        """
+        Get the resource containing the gas-prices Dataset, as defined
+        in the API's metadata response.
+        The output is saved to a file in disk.
+        """
+        downloaded = False
+        try:
+            dsmetadata = self.get_dataset_metadata()
+            if dsmetadata is not None:
+                rsmetadata = dsmetadata.get_resource(self.RESOURCE_NAME)
+                if rsmetadata is not None:
+                    downloaded = HttpClient.http_download_as_file(
+                        rsmetadata.url, outfile
+                    )
+        except KeyError:
+            pass
+        return downloaded

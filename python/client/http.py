@@ -52,10 +52,7 @@ class HttpClient:
         return response
 
     @staticmethod
-    def http_download(
-        url: str,
-        timeout: int = 60,
-    ):
+    def http_download(url: str, timeout: int = 60):
         """
         An HTTP request
         """
@@ -68,4 +65,23 @@ class HttpClient:
             )
         except ul3exc.MaxRetryError as exc:
             logging.error("Failed to download %s: %s", url, exc)
+
         return response
+
+    @staticmethod
+    def http_download_as_file(url: str, outfile: str, timeout: int = 60):
+        """
+        An HTTP request that saves to disk
+        """
+        response = HttpClient.http_download(url, timeout)
+        saved = False
+        try:
+            if response:
+                with open(outfile, "w", encoding="utf-8") as file:
+                    data = response.data.decode("utf-8")
+                    file.write(data)
+                saved = True
+        except OSError as exc:
+            logging.error("Failed to store %s to disk: %s", outfile, exc)
+
+        return saved
