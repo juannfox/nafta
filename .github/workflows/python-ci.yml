@@ -1,7 +1,7 @@
 name: Python CI
 
 env:
-  code_base: python
+  code_base: api
 
 on:
   push:
@@ -14,9 +14,7 @@ permissions:
 
 jobs:
   linting:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.10
@@ -41,3 +39,18 @@ jobs:
     - name: Lint with isort
       run: |
         isort "${code_base}" --check
+
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Run API
+      run: |
+        python3 "${code_base}/main.py"
+    - name: Simple test
+      run: |
+        curl http://localhost:8080/
