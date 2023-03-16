@@ -17,25 +17,25 @@
 
 ### Workspace
 
-´´´shell
+```shell
 # Setup a virtual environment, load it 
 # and install pip packages
 source ./load_environment.sh
-´´´
+```
 
 ### Linting
 
-´´´shell
+```shell
 # Run all the linting tools
 ./lint.sh
-´´´
+```
 
 ### Running the API
 
-´´´shell
+```shell
 cd python
 uvicorn main:app --reload
-´´´
+```
 
 ## Source
 
