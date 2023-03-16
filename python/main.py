@@ -1,18 +1,19 @@
 """
-Test
+API main
 """
 import logging
 from os import getenv
-
 import client
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, RedirectResponse, Response
+import uvicorn
 
 # Logging options
 LOG_LEVEL = "DEBUG" if getenv("DEBUG") == "1" else "INFO"
 logging.basicConfig(level=LOG_LEVEL)
 # Globals
 FAVICON = "../media/nafta.ico"
+PORT = 8080
 
 # Instantiations
 source = client.APIGobierno()
@@ -59,3 +60,11 @@ async def dataset():
     else:
         response = Response("Not found", 404)
     return response
+
+
+# Init
+if __name__ == "__main__":
+    # Uvicorn server setup
+    config = uvicorn.Config("main:app", port=PORT, log_level=LOG_LEVEL.lower())
+    server = uvicorn.Server(config)
+    server.run()
