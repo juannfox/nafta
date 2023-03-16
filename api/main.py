@@ -3,10 +3,11 @@ API main
 """
 import logging
 from os import getenv
+
 import client
+import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, RedirectResponse, Response
-import uvicorn
 
 # Logging options
 LOG_LEVEL = "DEBUG" if getenv("DEBUG") == "1" else "INFO"
