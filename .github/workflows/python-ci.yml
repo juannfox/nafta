@@ -30,14 +30,14 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Lint with black
       run: |
-        black "$code_base}" --check
+        black "${code_base}" --check
     - name: Lint with flake8
       run: |
-        find "$code_base}" -maxdepth 2 -type f -name "*.py" | xargs flake8
+        find "${code_base}" -maxdepth 2 -type f -name "*.py" | xargs flake8
     - name: Lint with pylint
       run: |
-        find "$code_base}" -maxdepth 2 -type f -name "*.py" | xargs pylint --init-hook \
+        find "${code_base}" -maxdepth 2 -type f -name "*.py" | xargs pylint --init-hook \
         "import sys; sys.path.append('./$code_base')"
     - name: Lint with isort
       run: |
-        isort "$code_base}" --check
+        isort "${code_base}" --check

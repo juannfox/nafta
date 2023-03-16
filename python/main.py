@@ -12,7 +12,7 @@ from fastapi.responses import FileResponse, RedirectResponse, Response
 LOG_LEVEL = "DEBUG" if getenv("DEBUG") == "1" else "INFO"
 logging.basicConfig(level=LOG_LEVEL)
 # Globals
-FAVICON = "../images/nafta.ico"
+FAVICON = "../media/nafta.ico"
 
 # Instantiations
 source = client.APIGobierno()
