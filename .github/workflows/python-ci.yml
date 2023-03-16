@@ -59,4 +59,4 @@ jobs:
         curl http://localhost:8080/
     - name: Read server output
       run: |
-        cat nohup.log
+        cat nohup.log 2> /dev/null
