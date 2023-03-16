@@ -30,6 +30,13 @@ source ./load_environment.sh
 ./lint.sh
 ´´´
 
+### Running the API
+
+´´´shell
+cd python
+uvicorn main:app --reload
+´´´
+
 ## Source
 
 The gas prices are fetched from *Argentina's* government API, specifically the Dataset [energia-precios-surtidor---resolucion-3142016](https://datos.gob.ar/dataset/energia-precios-surtidor---resolucion-3142016). After some processing of the response, we get an URL pointing towards a CSV file containing gas prices for every gas station in the country.
