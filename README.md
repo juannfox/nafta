@@ -18,7 +18,6 @@
 ### Workspace
 
 ```shell
-# Setup a virtual environment, load it 
 # and install pip packages
 source ./load_environment.sh
 ```
