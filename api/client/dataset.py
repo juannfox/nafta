@@ -1,7 +1,6 @@
 """
 Dataset metadata and resource classes.
 """
-
 from .io import FileName
 
 
