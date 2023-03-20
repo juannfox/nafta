@@ -14,7 +14,7 @@
 
 ## Tooling
 
-- Python 3.10 or newer
+- Python 3.10.4 or newer
 - pip3
 
 ### Workspace
@@ -34,8 +34,13 @@ source ./load_environment.sh
 ### Running the API
 
 ```shell
-cd python
-uvicorn main:app --reload
+python3 api/main.py
+```
+
+### Run containerized
+```shell
+docker build -t nafta
+docker run -d -p 8080:8080 nafta
 ```
 
 ## Source
