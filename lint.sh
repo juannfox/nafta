@@ -7,7 +7,7 @@
 FIND_DEPTH=2
 FIND_FILTER="*.py"
 VENV_PIP="venv/lib/python3.10/site-packages"
-TARGET="python"
+TARGET="api"
 
 function lint_flake8(){
     find "${TARGET}" -maxdepth "${FIND_DEPTH}" -type f -name "${FIND_FILTER}" \
@@ -21,7 +21,7 @@ function lint_pylint(){
 }
 
 isort --check "${TARGET}"
-black --check "${TARGET}"
+black --check "${TARGET}" --config .black.toml
 lint_flake8
 lint_pylint
 pyright .
