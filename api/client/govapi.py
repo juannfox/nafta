@@ -1,10 +1,15 @@
 """
 Government's API client
 """
+import logging
+
 from dataclasses import dataclass
+from pandas import read_csv, DataFrame
+from numpy import percentile
 
 from .dataset import DatasetResponse
 from .http import HttpClient
+from .io import FileName
 
 
 @dataclass
@@ -92,3 +97,49 @@ class APIGobierno:
         except KeyError:
             pass
         return downloaded
+
+    def get_gas_prices_dataframe(self):
+        """
+        Load the dataset in the form of a Dataframe
+        and return it.
+        """
+        file = FileName("tmp-datasource.csv")
+        columns = {
+            "localidad": "string",
+            "precio": "float32",
+            "idproducto":  "int8"
+        }
+
+        # Look for local cache
+        if not file.exists():
+            logging.info(
+                "Fetching dataset, as it did not exist locally as %s.",
+                file.full_name
+            )
+            download = self.get_gas_prices_resource_file(file.full_name)
+            if not download:
+                logging.error(
+                    "Could not download Dataset to %s.", file.full_name
+                )
+        try:
+            df = read_csv(
+                file.full_name, usecols=columns.keys(), dtype=columns
+            )
+            logging.debug("Read dataframe: \n%s", df.info())
+        except ValueError as exc:
+            logging.error("Failed to parse data into Dataframe: %s", exc)
+
+        return df
+
+
+def get_gas_price_avg(df: DataFrame, id: int, location: str):
+    """
+    Calculate average for a gas type with a fixed region.
+    """
+    logging.debug("Using filters: %s, %s.", id, location)
+    id_column = "idproducto"
+    location_column = "localidad"
+    price_column = "precio"
+    df = df.query(f"{location_column} == @location & {id_column} == @id")
+    price = percentile(df[price_column], 65)
+    return price

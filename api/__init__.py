@@ -12,7 +12,6 @@ logging.basicConfig(level=LOG_LEVEL)
 
 
 gov = client.APIGobierno()
-print(gov.get_dataset_metadata())
-response = gov.get_gas_prices_resource()
-if response:
-    print(response.data)
+df = gov.get_gas_prices_dataframe()
+price = get_gas_price_avg(df,2,"CAPITAL FEDERAL")
+print(price)

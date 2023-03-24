@@ -3,3 +3,4 @@ urllib3==1.26.14
 fastapi==0.94.1
 uvicorn==0.21.0
 pandas==1.5.3
+numpy==1.24.2
