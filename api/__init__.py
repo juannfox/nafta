@@ -13,5 +13,5 @@ logging.basicConfig(level=LOG_LEVEL)
 
 gov = client.APIGobierno()
 df = gov.get_gas_prices_dataframe()
-price = get_gas_price_avg(df,2,"CAPITAL FEDERAL")
+price = client.get_gas_price_avg(df,2,"CAPITAL FEDERAL")
 print(price)
