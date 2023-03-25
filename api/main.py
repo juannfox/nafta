@@ -14,7 +14,7 @@ LOG_LEVEL = "DEBUG" if getenv("DEBUG") == "1" else "INFO"
 logging.basicConfig(level=LOG_LEVEL)
 # Globals
 FAVICON = "../media/nafta.ico"
-PORT = 8080
+PORT = 8081
 
 # Instantiations
 source = client.APIGobierno()
@@ -61,6 +61,14 @@ async def dataset():
     else:
         response = Response("Not found", 404)
     return response
+
+
+@app.get("/naftasuper")
+async def naftasuper():
+    """Get regular gas price"""
+    df = source.get_gas_prices_dataframe()
+    price = client.get_gas_price_avg(df, 2, "CAPITAL FEDERAL")
+    return {"Nafta super": round(price, 2)}
 
 
 # Init
