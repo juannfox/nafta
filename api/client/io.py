@@ -24,7 +24,7 @@ class FileName:
         else:
             self.name = search.group(1)
             self.extension = search.group(3)
-            self.full_name = self.name + self.extension
+            self.full_name = self.name + "." + self.extension
 
     def __str__(self):
         ext = "" if self.extension in [None, ""] else f".{self.extension}"
