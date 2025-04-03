@@ -37,6 +37,8 @@ source ./load_environment.sh
 python3 api/main.py
 ```
 
+Available at `http://localhost:8081`.
+
 ### Making requests
 
 HTTP GET /naftasuper -> Price of regular octane gas ("Nafta Super")
@@ -48,7 +50,7 @@ HTTP GET /metadata -> Describe the dataset
 ### Run containerized
 ```shell
 docker build -t nafta
-docker run -d -p 8080:8080 nafta
+docker run -d -p 8081:8081 nafta
 ```
 
 ## Source
