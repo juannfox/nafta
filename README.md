@@ -37,6 +37,14 @@ source ./load_environment.sh
 python3 api/main.py
 ```
 
+### Making requests
+
+HTTP GET /naftasuper -> Price of regular octane gas ("Nafta Super")
+HTTP GET /docs -> Swagger UI
+HTTP GET /dataset -> Download the dataset (not RESTful)
+HTTP GET /metadata -> Describe the dataset
+
+
 ### Run containerized
 ```shell
 docker build -t nafta
